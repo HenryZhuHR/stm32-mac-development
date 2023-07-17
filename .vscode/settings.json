@@ -1,6 +1,16 @@
 {
     "files.associations": {
-        "main.h": "c"
+        "main.h": "c",
+        "stm32g4xx_hal.h": "c",
+        "stm32g474xx.h": "c",
+        "usart.h": "c",
+        "stm32g4xx_hal_conf.h": "c",
+        "stm32g4xx_hal_rcc.h": "c",
+        "stm32g4xx_hal_def.h": "c",
+        "stm32g4xx.h": "c",
+        "pwd.h": "c",
+        "gpio.h": "c",
+        "pwm.h": "c"
     },
     "stm32-for-vscode.openOCDPath": false,
     "stm32-for-vscode.armToolchainPath": false,

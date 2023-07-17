@@ -13,6 +13,7 @@
   - [项目编译和烧录](#项目编译和烧录)
     - [编译工程](#编译工程)
     - [使用 OpenOCD 烧录到开发板](#使用-openocd-烧录到开发板)
+  - [数据](#数据)
   - [参考文章](#参考文章)
 
 
@@ -123,12 +124,34 @@ Info : starting gdb server for stm32g4x.cpu on 3333
 Info : Listening on port 3333 for gdb connections
 ```
 
-保持上述连接的状态下，在另一个终端中，执行以下命令，烧录到开发板。
+保持上述连接的状态下，在另一个终端中，启动  `telnet`，连接到 OpenOCD
 ```shell
-arm-none-eabi-gdb build/stm32-car.elf
+telnet localhost 4444
+# 连接成功后，输入
+> halt  # 目标芯片挂起，相当于关机
+# > flash write_image erase <需要烧写的目标文件>
+> flash write_image erase build/stm32-car.bin
+> reset # 目标芯片复位
 ```
 
+也可以一次性执行
+```shell
+export openocd_scripts=$OPENOCD_HOME/openocd/scripts
+openocd \
+    -f $openocd_scripts/interface/stlink.cfg \
+    -f $openocd_scripts/target/stm32g4x.cfg \
+    -c init \
+    -c "reset halt; wait_halt; flash write_image erase build/stm32-car.bin 0x08000000;" \
+    -c "reset run; shutdown"
+```
+- `-c` 表示要执行的选项， `init` 初始化
+- `wait_halt` 是等待目标芯片挂起，必须有
 
+
+
+
+## 数据
+[STM32G474RE](https://www.st.com/zh/microcontrollers-microprocessors/stm32g474re.html)
 
 
 ## 参考文章

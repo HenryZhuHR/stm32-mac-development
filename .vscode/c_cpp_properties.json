@@ -3,19 +3,24 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/Core/Inc",
-                "${workspaceFolder}/Drivers/CMSIS/Include",
-                "${workspaceFolder}/Drivers/STM32G4xx_HAL_Driver/Inc",
-                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32G4xx/Include"
+                // ${workspaceFolder}/
+                "Core/Inc",
+                "Drivers/STM32G4xx_HAL_Driver/Inc",
+                "Drivers/STM32G4xx_HAL_Driver/Inc/Legacy",
+                "Drivers/CMSIS/Device/ST/STM32G4xx/Include",
+                "Drivers/CMSIS/Include"
             ],
-            "defines": [],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32G474xx"
+            ],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "arm-gcc"
+            "intelliSenseMode": "macos-gcc-arm"
         }
     ],
     "version": 4
