@@ -59,7 +59,7 @@ export PATH=$PATH:$ARM_GCC_HOME/bin
 
 新建项目 `File -> New Project`
 
-![New_Project](./docs/images/STM32CubeMX-start.png)
+![New_Project](./docs/images/STM32CubeMX-New_Project.png)
 
 选择芯片(左侧 `Commercial Part Number` 搜索)，然后右上角 `Start Project`
 ![MCU_Selector](./docs/images/STM32CubeMX-MCU_Selector.png)

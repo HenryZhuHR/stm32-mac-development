@@ -57,5 +57,4 @@ Module.symvers
 Mkfile.old
 dkms.conf
 node_modules
-.temp
-.cache
+
