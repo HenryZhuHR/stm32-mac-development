@@ -1,7 +1,7 @@
 build/
 
 
-pnpm-lock.yaml
+yarn.lock
 
 
 # Prerequisites
