@@ -1,0 +1,19 @@
+{
+  "name": "stm32-mac-development",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev",
+    "docs:build": "vuepress build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vuepress/client": "2.0.0-beta.66",
+    "vue": "^3.3.4",
+    "vuepress": "2.0.0-beta.66"
+  }
+}

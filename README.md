@@ -10,6 +10,9 @@
       - [3. ARM-GCC 工具链](#3-arm-gcc-工具链)
     - [代码环境](#代码环境)
   - [初始化项目](#初始化项目)
+  - [项目编译和烧录](#项目编译和烧录)
+    - [编译工程](#编译工程)
+    - [使用 OpenOCD 烧录到开发板](#使用-openocd-烧录到开发板)
   - [参考文章](#参考文章)
 
 
@@ -56,20 +59,71 @@ export PATH=$PATH:$ARM_GCC_HOME/bin
 
 新建项目 `File -> New Project`
 
-![New_Project](./images/STM32CubeMX-start.png)
+![New_Project](./docs/images/STM32CubeMX-start.png)
 
 选择芯片(左侧 `Commercial Part Number` 搜索)，然后右上角 `Start Project`
-![MCU_Selector](./images/STM32CubeMX-MCU_Selector.png)
+![MCU_Selector](./docs/images/STM32CubeMX-MCU_Selector.png)
 
 2. 配置项目
 
 - **Pinout&Configuration**: 设置芯片 Pinout 
-![Pinout](./images/STM32CubeMX-pinoutConfig.png)
+![Pinout](./docs/images/STM32CubeMX-pinoutConfig.png)
 
 - **Project Manger -> Project**: 设置项目名称和路径, `Toolchain/IDE` 选择 `Makefile`
-![ProjectManger](./images/STM32CubeMX-ProjectManger.png)
+![ProjectManger](./docs/images/STM32CubeMX-ProjectManger.png)
 
 - **Project Manger -> Code Generator**: 选择 `Copy only the necessary library files`(不要复制全部库目录，否则项目很大)。勾选 `Generate peripheral initialization as a pair of '.c/.h' files per peripheral`，这样会生成 `.c/.h` 文件，方便查看和修改。
+
+
+
+## 项目编译和烧录
+
+### 编译工程
+进入到工程目录下，执行 `make`，编译成功后会生成 `build` 目录，包含编译后的文件。该过程会结合 `arm-none-eabi-gcc` 进行编译，具体细节可以查看 `Makefile`。
+```shell
+arm-none-eabi-size build/stm32-car.elf
+   text    data     bss     dec     hex filename
+   3564      20    1572    5156    1424 build/stm32-car.elf
+arm-none-eabi-objcopy -O ihex build/stm32-car.elf build/stm32-car.hex
+arm-none-eabi-objcopy -O binary -S build/stm32-car.elf build/stm32-car.bin
+```
+
+### 使用 OpenOCD 烧录到开发板
+
+运行下面的命令，启动 OpenOCD，连接到开发板。
+```shell
+export openocd_scripts=$OPENOCD_HOME/openocd/scripts
+openocd \
+    -f $openocd_scripts/interface/stlink.cfg \
+    -f $openocd_scripts/target/stm32g4x.cfg
+
+```
+> 如果出现 “macos 无法验证“openocd的开发者。你确定要打开它吗？”，到`系统设置 -> 安全性与隐私 -> 通用`，点击“仍要打开”即可。
+
+出现以下内容，表示连接成功，其中可以获得一些信息
+- tcl 监听端口：6666
+- telnet 监听端口：4444
+- gdb 监听端口：3333
+- 时钟频率：2000 kHz
+```shell
+xPack Open On-Chip Debugger 0.12.0-01004-g9ea7f3d64-dirty (2023-01-30-17:03)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+Info : auto-selecting first available session transport "hla_swd". To override use 'transport select <transport>'.
+Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : clock speed 2000 kHz
+Info : STLINK V3J9M3 (API v3) VID:PID 0483:374E
+Info : Target voltage: 3.285220
+Info : [stm32g4x.cpu] Cortex-M4 r0p1 processor detected
+Info : [stm32g4x.cpu] target has 6 breakpoints, 4 watchpoints
+Info : starting gdb server for stm32g4x.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+```
+
+
 
 
 ## 参考文章
