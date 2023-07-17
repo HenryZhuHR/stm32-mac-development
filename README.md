@@ -100,10 +100,10 @@ openocd \
 ```
 > 如果出现 “macos 无法验证“openocd的开发者。你确定要打开它吗？”，到`系统设置 -> 安全性与隐私 -> 通用`，点击“仍要打开”即可。
 
-出现以下内容，表示连接成功，其中可以获得一些信息
+出现以下内容，表示连接成功，其中可以获得**三种端口连接协议方式(tcl,telnet,gdb)**和其他一些一些信息
 - tcl 监听端口：6666
 - telnet 监听端口：4444
-- gdb 监听端口：3333
+- gdb 监听端口：3333 (调试功能使用)
 - 时钟频率：2000 kHz
 ```shell
 xPack Open On-Chip Debugger 0.12.0-01004-g9ea7f3d64-dirty (2023-01-30-17:03)
@@ -121,6 +121,11 @@ Info : [stm32g4x.cpu] Cortex-M4 r0p1 processor detected
 Info : [stm32g4x.cpu] target has 6 breakpoints, 4 watchpoints
 Info : starting gdb server for stm32g4x.cpu on 3333
 Info : Listening on port 3333 for gdb connections
+```
+
+保持上述连接的状态下，在另一个终端中，执行以下命令，烧录到开发板。
+```shell
+arm-none-eabi-gdb build/stm32-car.elf
 ```
 
 
